@@ -9,7 +9,7 @@ const reset = document.getElementById('reset');
 const main = document.getElementById('main');
 
 let usersArr = [];
-
+//⭐
 const fetchData = async (users) => {
   const res = await fetch(`https://randomuser.me/api/?results=${users}`);
   const data = await res.json();
@@ -25,7 +25,7 @@ const fetchData = async (users) => {
   displayUI(usersArr);
 };
 
-const displayUI = (data) => {
+const displayUI = (data, milli = null) => {
   main.innerHTML = `<h2><strong>Person</strong> Wealth</h2>`;
 
   data.forEach((data) => {
@@ -35,6 +35,9 @@ const displayUI = (data) => {
 					src="${data.img}"
 					alt="">
 				<strong>${data.name}</strong>
+				<strong class="milli ${milli ? 'show' : ''}">${
+      data.money > 1000000 - 1 ? '⭐' : ''
+    }</strong>
 				<span>$${data.money.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</span>
 			</div>
 		`;
@@ -52,9 +55,18 @@ const doubleMoney = () => {
   displayUI(usersArr);
 };
 
+const millionaires = function () {
+  displayUI(usersArr, 1);
+};
+
+///////////////////
+//CALL FUNCTION
+//////////////////
 fetchData(5);
 
 /////////////////////
+//EVENT LISTENERS
 /////////////////////
 addUser.addEventListener('click', () => fetchData(1));
 double.addEventListener('click', doubleMoney);
+showMillionaires.addEventListener('click', millionaires);

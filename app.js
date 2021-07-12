@@ -3,7 +3,7 @@
 const addUser = document.getElementById('add-user');
 const double = document.getElementById('double');
 const showMillionaires = document.getElementById('show-millionaires');
-const sort = document.getElementById('sort');
+const sortBtn = document.getElementById('sort');
 const calculateWealth = document.getElementById('calculate-wealth');
 const reset = document.getElementById('reset');
 const main = document.getElementById('main');
@@ -59,6 +59,12 @@ const millionaires = function () {
   displayUI(usersArr, 1);
 };
 
+const sortRicest = function () {
+  console.log(usersArr);
+  usersArr = usersArr.sort((a, b) => b.money - a.money);
+  displayUI(usersArr);
+};
+
 ///////////////////
 //CALL FUNCTION
 //////////////////
@@ -70,3 +76,4 @@ fetchData(5);
 addUser.addEventListener('click', () => fetchData(1));
 double.addEventListener('click', doubleMoney);
 showMillionaires.addEventListener('click', millionaires);
+sortBtn.addEventListener('click', sortRicest);

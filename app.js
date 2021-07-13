@@ -9,6 +9,8 @@ const reset = document.getElementById('reset');
 const main = document.getElementById('main');
 
 let usersArr = [];
+let richest = false;
+
 //⭐
 const fetchData = async (users) => {
   const res = await fetch(`https://randomuser.me/api/?results=${users}`);
@@ -22,10 +24,10 @@ const fetchData = async (users) => {
     });
   });
 
-  displayUI(usersArr);
+  displayUI(usersArr, richest);
 };
 
-const displayUI = (data, milli = null) => {
+const displayUI = (data, richest = null) => {
   main.innerHTML = `<h2><strong>Person</strong> Wealth</h2>`;
 
   data.forEach((data) => {
@@ -35,7 +37,7 @@ const displayUI = (data, milli = null) => {
 					src="${data.img}"
 					alt="">
 				<strong>${data.name}</strong>
-				<strong class="milli ${milli ? 'show' : ''}">${
+				<strong class="milli ${richest ? 'show' : ''}">${
       data.money > 1000000 - 1 ? '⭐' : ''
     }</strong>
 				<span>$${data.money.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}</span>
@@ -52,17 +54,17 @@ const randomMoney = () => {
 const doubleMoney = () => {
   usersArr.map((user) => (user.money = user.money * 2));
 
-  displayUI(usersArr);
+  displayUI(usersArr, richest);
 };
 
 const millionaires = function () {
-  displayUI(usersArr, 1);
+  richest = richest ? false : true;
+  displayUI(usersArr, richest);
 };
 
 const sortRicest = function () {
-  console.log(usersArr);
   usersArr = usersArr.sort((a, b) => b.money - a.money);
-  displayUI(usersArr);
+  displayUI(usersArr, richest);
 };
 
 ///////////////////

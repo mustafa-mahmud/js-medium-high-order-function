@@ -67,6 +67,19 @@ const sortRicest = function () {
   displayUI(usersArr, richest);
 };
 
+const totalWealth = function () {
+  const allUserMoney = usersArr.map((mon) => mon.money);
+  const total = allUserMoney.reduce((acc, cur) => acc + cur, 0);
+
+  main.innerHTML += `
+		<div>
+			<h3>Total Wealth: <strong>$${total
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, '$&,')}</strong></h3>
+		</div>
+	`;
+};
+
 ///////////////////
 //CALL FUNCTION
 //////////////////
@@ -79,3 +92,4 @@ addUser.addEventListener('click', () => fetchData(1));
 double.addEventListener('click', doubleMoney);
 showMillionaires.addEventListener('click', millionaires);
 sortBtn.addEventListener('click', sortRicest);
+calculateWealth.addEventListener('click', totalWealth);

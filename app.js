@@ -9,7 +9,10 @@ const reset = document.getElementById('reset');
 const main = document.getElementById('main');
 
 let usersArr = [];
+let oldUsersArr = [];
 let richest = false;
+
+if (localStorage.getItem('users') !== null) localStorage.removeItem('users');
 
 //⭐
 const fetchData = async (users) => {
@@ -23,6 +26,9 @@ const fetchData = async (users) => {
       money: randomMoney(),
     });
   });
+
+  if (localStorage.getItem('users') === null)
+    localStorage.setItem('users', JSON.stringify(usersArr));
 
   displayUI(usersArr, richest);
 };
@@ -71,6 +77,7 @@ const totalWealth = function () {
   const allUserMoney = usersArr.map((mon) => mon.money);
   const total = allUserMoney.reduce((acc, cur) => acc + cur, 0);
 
+  displayUI(usersArr);
   main.innerHTML += `
 		<div>
 			<h3>Total Wealth: <strong>$${total
@@ -78,6 +85,11 @@ const totalWealth = function () {
         .replace(/\d(?=(\d{3})+\.)/g, '$&,')}</strong></h3>
 		</div>
 	`;
+};
+
+const resetUsers = function () {
+  usersArr = JSON.parse(localStorage.getItem('users'));
+  displayUI(usersArr, richest);
 };
 
 ///////////////////
@@ -93,3 +105,7 @@ double.addEventListener('click', doubleMoney);
 showMillionaires.addEventListener('click', millionaires);
 sortBtn.addEventListener('click', sortRicest);
 calculateWealth.addEventListener('click', totalWealth);
+reset.addEventListener('click', () => {
+  const ans = prompt('Do you want to reset all? yes/no');
+  if (ans.toLowerCase() === 'yes') resetUsers();
+});

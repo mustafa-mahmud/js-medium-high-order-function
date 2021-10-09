@@ -9,7 +9,6 @@ const reset = document.getElementById('reset');
 const main = document.getElementById('main');
 
 let usersArr = [];
-let oldUsersArr = [];
 let richest = false;
 
 if (localStorage.getItem('users') !== null) localStorage.removeItem('users');
